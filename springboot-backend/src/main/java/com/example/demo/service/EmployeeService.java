@@ -9,4 +9,17 @@ public interface EmployeeService {
 	
 	public List<Employee> getAllEmployees();
 	
+
+	public Employee createEmployee(Employee employee);
+	
+	public Employee getEmployeeById(Integer id);
+	
+
+	
+	public Employee updateEmployee(Employee employeeDetails);
+
+	public String deleteEmployee(Integer id);
+
+
+	
 }
