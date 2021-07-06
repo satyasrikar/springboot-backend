@@ -20,21 +20,26 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.Employee;
 import com.example.demo.service.EmployeeService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @CrossOrigin(origins = "http://localhost:3000")
+@Api(value = "EmployeeController")
 @RestController
-@RequestMapping(path = "/api/v1", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api/v1")
 public class EmployeeController {
 	
 	@Autowired
 	private EmployeeService employeeService;
 	
-	
+	@ApiOperation(value = "Get list of Employees", response = Iterable.class, tags = "viewAllEmployee")
 	@GetMapping("/employees")
+	
 	 public List<Employee> viewAllEmployeeList(){
 		 return employeeService.getAllEmployees();
 	 }
 	
-	
+	@ApiOperation(value = "Add new Employee", response = Employee.class, tags = "addEmployee")
 	@PostMapping("/employees")
 
 	public Employee addEmployee(@RequestBody Employee employee)
@@ -43,21 +48,21 @@ public class EmployeeController {
 
 
 	
-	
+	@ApiOperation(value = "Get an employee by ID", response = Employee.class, tags = "findEmployee")
 	@GetMapping("/employees/{id}")
 	public Employee findEmployee(@PathVariable("id") Integer id) {
 	return employeeService.getEmployeeById(id);
 	}
 
 	
-	
-	@PostMapping("/update")
+	@ApiOperation(value = "Update Employee information", response = Employee.class, tags = "updateEmployee")
+	@PutMapping("/employees/update")
 	public Employee editEmployee(@RequestBody Employee employee)
 	{
 	System.out.print("Updating Employee...");
 	return employeeService.updateEmployee(employee);	}
 
-
+	@ApiOperation(value = "Delete an Employee", response = Employee.class, tags = "deleteEmployee")
 	@DeleteMapping("/employees/{id}")
 	public String deleteEmployee(@PathVariable("id") Integer id) {
 	System.out.print("Deleting Employee with id= " + id);
